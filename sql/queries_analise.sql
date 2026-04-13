@@ -1,0 +1,40 @@
+-- Faturamento por região --
+SELECT 
+    region,
+    SUM(sales) AS faturamento_total
+FROM superstore
+GROUP BY region
+ORDER BY faturamento_total DESC;
+
+-- Lucro por região --
+SELECT 
+    region,
+    SUM(profit) AS lucro_total
+FROM superstore
+GROUP BY region
+ORDER BY lucro_total DESC;
+
+-- Desconto médio por região --
+SELECT 
+    region,
+    AVG(discount) AS media_desconto
+FROM superstore
+GROUP BY region
+ORDER BY media_desconto DESC;
+
+-- Volume de vendas por região --
+SELECT 
+    region,
+    SUM(quantity) AS volume_total
+FROM superstore
+GROUP BY region;
+
+-- Análise completa --
+SELECT 
+    region,
+    SUM(sales) AS faturamento,
+    SUM(profit) AS lucro,
+    SUM(quantity) AS volume,
+    AVG(discount) AS desconto_medio
+FROM superstore
+GROUP BY region;
