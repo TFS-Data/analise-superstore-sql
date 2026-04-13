@@ -38,3 +38,11 @@ SELECT
     AVG(discount) AS desconto_medio
 FROM superstore
 GROUP BY region;
+
+-- Relação entre desconto e lucro médio --
+SELECT 
+    discount,
+    AVG(profit) AS lucro_medio
+FROM superstore
+GROUP BY discount
+ORDER BY discount;
