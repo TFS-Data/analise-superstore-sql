@@ -5,7 +5,7 @@ CREATE TABLE superstore (
     country VARCHAR(50),
     city VARCHAR(100),
     state VARCHAR(100),
-    postal_code INT,
+    postal_code VARCHAR(50,
     region VARCHAR(50),
     category VARCHAR(50),
     sub_category VARCHAR(50),
