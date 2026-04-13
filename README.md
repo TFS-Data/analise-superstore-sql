@@ -12,16 +12,12 @@ Analisar:
 - Desconto  
 - Volume de vendas  
 
----
-
 ## Principais Insights
 
-- A região **West** apresentou maior faturamento e lucro  
-- Regiões com maior desconto tendem a ter menor lucratividade  
-- A relação entre desconto e volume de vendas não é direta  
-- Descontos elevados podem gerar prejuízo  
-
----
+- A região West apresenta o maior faturamento e lucro
+- Regiões com maior média de desconto tendem a ter menor lucratividade
+- Descontos elevados (como 80%) podem gerar prejuízo
+- A relação entre desconto e volume de vendas não é direta
 
 ## Ferramentas utilizadas
 
