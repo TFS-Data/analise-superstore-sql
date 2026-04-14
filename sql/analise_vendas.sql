@@ -59,7 +59,7 @@ FROM superstore
 GROUP BY discount
 ORDER BY discount ASC
 
--- Top 7 regiões por faturamento
+-- 7. Top 3 regiões por faturamento
 SELECT 
     region,
     SUM(sales) AS faturamento
