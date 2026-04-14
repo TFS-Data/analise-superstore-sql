@@ -112,3 +112,8 @@ O uso de descontos deve ser estratégico, pois pode impactar negativamente a ren
 * Criar dashboard no Power BI para visualização dos dados
 * Analisar lucratividade por produto
 * Investigar padrões de vendas ao longo do tempo
+
+##  Fonte dos Dados
+
+* Dataset: Superstore Sales Dataset
+* Fonte: Kaggle
