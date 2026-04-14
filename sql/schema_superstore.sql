@@ -1,3 +1,7 @@
+-- =========================================
+-- CRIAÇÃO DA TABELA SUPERSTORE
+-- =========================================
+
 CREATE TABLE superstore (
     id INT AUTO_INCREMENT PRIMARY KEY,
     ship_mode VARCHAR(50),
