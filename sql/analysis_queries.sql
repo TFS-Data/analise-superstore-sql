@@ -1,35 +1,45 @@
--- Faturamento por região --
+-- =========================================
+-- ANÁLISE DE PERFORMANCE DE VENDAS
+-- Base: superstore
+-- =========================================
+
+-- 1. Faturamento por região
 SELECT 
     region,
     SUM(sales) AS faturamento_total
 FROM superstore
 GROUP BY region
-ORDER BY faturamento_total DESC;
+ORDER BY faturamento_total DESC
 
--- Lucro por região --
+
+-- 2. Lucro por região
 SELECT 
     region,
     SUM(profit) AS lucro_total
 FROM superstore
 GROUP BY region
-ORDER BY lucro_total DESC;
+ORDER BY lucro_total DESC
 
--- Desconto médio por região --
+
+-- 3. Desconto médio por região
 SELECT 
     region,
     AVG(discount) AS media_desconto
 FROM superstore
 GROUP BY region
-ORDER BY media_desconto DESC;
+ORDER BY media_desconto DESC
 
--- Volume de vendas por região --
+
+-- 4. Volume de vendas por região
 SELECT 
     region,
     SUM(quantity) AS volume_total
 FROM superstore
-GROUP BY region;
+GROUP BY region
+ORDER BY volume_total DESC
 
--- Análise completa --
+
+-- 5. Análise consolidada por região
 SELECT 
     region,
     SUM(sales) AS faturamento,
@@ -37,12 +47,14 @@ SELECT
     SUM(quantity) AS volume,
     AVG(discount) AS desconto_medio
 FROM superstore
-GROUP BY region;
+GROUP BY region
+ORDER BY faturamento DESC
 
--- Relação entre desconto e lucro médio --
+
+-- 6. Relação entre desconto e lucro médio
 SELECT 
     discount,
     AVG(profit) AS lucro_medio
 FROM superstore
 GROUP BY discount
-ORDER BY discount;
+ORDER BY discount ASC
