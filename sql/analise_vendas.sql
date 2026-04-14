@@ -11,7 +11,6 @@ FROM superstore
 GROUP BY region
 ORDER BY faturamento_total DESC
 
-
 -- 2. Lucro por região
 SELECT 
     region,
@@ -67,3 +66,11 @@ FROM superstore
 GROUP BY region
 ORDER BY faturamento DESC
 LIMIT 3
+
+-- 8. Regiões com maior eficiência (lucro/faturamento)
+SELECT 
+    region,
+    SUM(profit) / NULLIF(SUM(sales), 0) AS margem_lucro
+FROM superstore
+GROUP BY region
+ORDER BY margem_lucro DESC
