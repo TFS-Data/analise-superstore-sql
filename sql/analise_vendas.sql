@@ -1,7 +1,7 @@
--- =========================================
+
 -- ANÁLISE DE PERFORMANCE DE VENDAS
 -- Base: superstore
--- =========================================
+
 
 -- 1. Faturamento por região
 SELECT 
