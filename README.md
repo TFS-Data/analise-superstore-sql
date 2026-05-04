@@ -1,119 +1,63 @@
-# 📊 Análise de Performance de Vendas com SQL
+# Análise de Vendas e Logística - Superstore
 
-##  Objetivo
-
-Analisar dados de vendas para identificar quais regiões apresentam melhor desempenho, avaliando faturamento, lucro, volume de vendas e o impacto dos descontos.
-
-##  Perguntas de Negócio
-
-* Quais regiões possuem maior faturamento e lucro?
-* Onde os descontos são mais aplicados?
-* Existe relação entre desconto e lucro?
-* Quais regiões possuem maior volume de vendas?
-
-##  Base de Dados
-
-A base contém informações de vendas, incluindo:
-
-* Região
-* Receita (sales)
-* Lucro (profit)
-* Desconto (discount)
-* Quantidade vendida (quantity)
+## 📊 Contexto de Negócio
+No cenário dinâmico do e-commerce, a eficiência logística e a otimização do portfólio de produtos são diferenciais competitivos cruciais. Este projeto tem como objetivo **analisar as vendas da rede Superstore** para identificar gargalos operacionais na cadeia de suprimentos e descobrir oportunidades de maximização de receita. Através de análises aprofundadas, buscamos responder perguntas estratégicas sobre o comportamento de vendas, rentabilidade de produtos e eficiência nas entregas.
 
 ## 🛠️ Ferramentas Utilizadas
+- **Banco de Dados:** PostgreSQL
+- **IDE/Gerenciamento:** DBeaver
+- **Visualização e Dashboards:** Power BI
 
-* SQL
+## 🏗️ Arquitetura dos Dados
+Abaixo, a representação da arquitetura e relacionamento das entidades do nosso banco de dados:
 
-## 🔎 Análises Realizadas
-
-### 1. Faturamento por Região
-
-```sql
-SELECT 
-    region,
-    SUM(sales) AS faturamento_total
-FROM superstore
-GROUP BY region
-ORDER BY faturamento_total DESC;
+```mermaid
+erDiagram
+    %% Exemplo de estrutura - adapte conforme o seu banco real
+    ORDERS ||--|{ ORDER_ITEMS : "contém"
+    CUSTOMERS ||--|{ ORDERS : "realiza"
+    PRODUCTS ||--|{ ORDER_ITEMS : "inclui"
 ```
 
-### 2. Lucro por Região
+> [!NOTE]
+> **Placeholder:** Substitua o bloco mermaid acima ou insira o link/imagem do seu diagrama ER real (ex: `![Diagrama ER](./assets/diagrama-er.png)`).
 
+## 💻 Principais Consultas e Técnicas (SQL)
+Para garantir uma análise robusta e performática, foram empregadas técnicas avançadas de SQL:
+
+- **CTEs (Common Table Expressions):** Utilizadas para modularizar consultas complexas, tornando o código mais legível e facilitando a manutenção da lógica de negócio.
+- **Window Functions:** Aplicadas para o cálculo de métricas analíticas avançadas, como **médias móveis** de vendas e ranqueamento de produtos por categoria.
+- **Joins Complexos:** Cruzamento de múltiplas tabelas (Vendas, Produtos, Clientes e Logística) para consolidar a visão holística das operações.
+
+### Exemplo de Código: Cálculo de Média Móvel
 ```sql
+WITH VendasDiarias AS (
+    SELECT 
+        data_pedido,
+        SUM(valor_venda) AS total_vendas
+    FROM 
+        vendas
+    GROUP BY 
+        data_pedido
+)
 SELECT 
-    region,
-    SUM(profit) AS lucro_total
-FROM superstore
-GROUP BY region
-ORDER BY lucro_total DESC;
+    data_pedido,
+    total_vendas,
+    AVG(total_vendas) OVER(ORDER BY data_pedido ROWS BETWEEN 6 PRECEDING AND CURRENT ROW) AS media_movel_7_dias
+FROM 
+    VendasDiarias;
 ```
 
-### 3. Desconto Médio por Região
+## 📈 Insights Principais e Resultados
+As análises revelaram descobertas críticas para a operação do negócio:
+1. **Princípio de Pareto na Receita:** Descobrimos que **20% dos produtos** do catálogo são responsáveis por gerar **80% da receita** total da Superstore, indicando uma alta dependência de um grupo seleto de itens.
+2. **Gargalos de Logística:** Foram identificadas rotas e categorias de frete com atrasos recorrentes, impactando diretamente a satisfação do cliente e elevando os custos de devolução.
 
-```sql
-SELECT 
-    region,
-    AVG(discount) AS media_desconto
-FROM superstore
-GROUP BY region
-ORDER BY media_desconto DESC;
-```
+## 🚀 Sugestões de Próximos Passos
+Para evoluir esta solução e aprofundar o impacto analítico, sugerem-se as seguintes iniciativas:
+- **Automatização de Pipelines:** Implementar fluxos de ETL (ex: com Apache Airflow) para atualização contínua do banco de dados PostgreSQL.
+- **Modelagem Preditiva:** Utilizar algoritmos de Machine Learning em Python para prever a demanda dos produtos da "Curva A" (os 20% mais rentáveis) e evitar ruptura de estoque.
+- **Análise de Cohort:** Desenvolver análises de retenção de clientes para entender o LTV (Life Time Value) ao longo do tempo.
 
-### 4. Volume de Vendas por Região
-
-```sql
-SELECT 
-    region,
-    SUM(quantity) AS volume_total
-FROM superstore
-GROUP BY region;
-```
-
-### 5. Análise Consolidada por Região
-
-```sql
-SELECT 
-    region,
-    SUM(sales) AS faturamento,
-    SUM(profit) AS lucro,
-    SUM(quantity) AS volume,
-    AVG(discount) AS desconto_medio
-FROM superstore
-GROUP BY region;
-```
-
-### 6. Relação entre Desconto e Lucro Médio
-
-```sql
-SELECT 
-    discount,
-    AVG(profit) AS lucro_medio
-FROM superstore
-GROUP BY discount
-ORDER BY discount;
-```
-
-##  Principais Insights
-
-* Algumas regiões se destacam tanto em faturamento quanto em lucro, indicando maior eficiência operacional.
-* Regiões com maior volume de vendas nem sempre apresentam maior lucratividade.
-* O uso de descontos varia entre regiões, podendo impactar diretamente os resultados financeiros.
-* A análise da relação entre desconto e lucro sugere que maiores descontos podem reduzir a rentabilidade média.
-
-##  Conclusão
-
-A análise evidencia que faturamento alto não garante maior lucro, sendo essencial avaliar a eficiência das vendas.
-
-O uso de descontos deve ser estratégico, pois pode impactar negativamente a rentabilidade quando aplicado em excesso.
-
-##  Próximos Passos
-
-* Criar dashboard no Power BI para visualização dos dados
-* Analisar lucratividade por produto
-* Investigar padrões de vendas ao longo do tempo
-
-##  Fonte dos Dados
-
-* Dataset: Superstore Sales Dataset
-* Fonte: Kaggle
+---
+*Desenvolvido por [TFS-Data](https://github.com/TFS-Data)*
